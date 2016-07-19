@@ -1,3 +1,6 @@
+## Installation
+`bower install nanobox-io/nanobox-dash-app-crystal --save `
+
 ## Usage
 
 
@@ -15,5 +18,5 @@ isHover   - Not currently implemented, but pass in true to get
 el        - The jquery element to attach the crystal to
 ###
 
-nanobox.crystals.crystalize() {uniqueNum:20, isHover:false, el:$('#some-element') } )
+nanobox.crystals.crystalize {uniqueNum:20, isHover:false, el:$('#some-element') }
 ```

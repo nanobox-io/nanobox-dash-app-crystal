@@ -9,6 +9,9 @@ class Crystal
     @draw seed, isHover
     @getBitmap holder
 
+  crystalize : (data)-> @attachImage data.uniqueNum, data.isHover, data.el
+
+
   # ----------- Meat
 
   draw : ( @seed = 135218, isHover=false ) ->
@@ -62,10 +65,12 @@ class Crystal
     randomIndex = Math.floor(@points.length * @randomNum(@seed))
     randomAxis  = if @randomNum(@seed*102) > 0.5 then 'x' else 'y'
     midPoint    = Math.round(rows*cols/2)
+
+    # Create a jaggy point
     if randomIndex < midPoint
-      @points[randomIndex][randomAxis] -= 10 + 20 * @randomNum(@seed*200)
+      @points[randomIndex][randomAxis] -= 10 + 1 * @randomNum(@seed*200)
     else
-      @points[randomIndex][randomAxis] += 10 + 20 * @randomNum(@seed*200)
+      @points[randomIndex][randomAxis] += 10 + 1 * @randomNum(@seed*200)
 
   drawShapesDescending : (pts, color=0xFFFFFF, addStroke=true) ->
     fadeColor=true
@@ -98,7 +103,7 @@ class Crystal
     return min + rnd * (max - min)
 
   getBitmapDataUrl : () ->
-    height = 150
+    height = 40
     scaleFactor = 1
 
     scaleFactor = height / @dimmensions.h
@@ -131,7 +136,7 @@ class Crystal
 
 window.nanobox ||= {}
 nanobox.Crystal = Crystal
-nanobox.polySingleton = new nanobox.Crystal()
+nanobox.crystals = new nanobox.Crystal()
 ###
 Install the client
 nanobox link <app-name>

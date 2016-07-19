@@ -1,5 +1,5 @@
 $crystals = $ '.crystals'
 for i in [3..80]
-  nanobox.polySingleton.attachImage i+20, false, $crystals
+  nanobox.crystals.crystalize {uniqueNum:i+20, isHover:false, el:$crystals}
 
-nanobox.polySingleton.attachImage 20, false, $crystals
+nanobox.crystals.crystalize {uniqueNum:20, isHover:false, el:$crystals}

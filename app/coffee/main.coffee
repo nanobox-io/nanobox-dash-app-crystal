@@ -5,11 +5,11 @@ class Crystal
     @draw seed, isHover
     return @getBitmapDataUrl()
 
-  attachImage : (seed, isHover, holder) ->
+  attachImage : (seed, isHover, holder, @height) ->
     @draw seed, isHover
     @getBitmap holder
 
-  crystalize : (data)-> @attachImage data.uniqueNum, data.isHover, data.el
+  crystalize : (data)-> @attachImage data.uniqueNum, data.isHover, data.el, data.height
 
 
   # ----------- Meat
@@ -25,25 +25,25 @@ class Crystal
     @s.y  = 2
     @g    = @s.graphics
 
-    color = if isHover then 0x0596E0 else 0x555555
+    color = if isHover then 0xFF0000 else 0x96A1A7
 
     # Draw the points
     @createRandomPointGrid(3,3,15)
 
     # Color
     pts = _.sortBy( @points, 'x');
-    @drawShapesDescending pts, color
+    @drawShapesDescending pts, color, isHover
     @dimmensions = { x:pts[0].x, w:pts[8].x - pts[0].x }
 
     pts = _.sortBy( @points, 'y' );
-    @drawShapesDescending pts, color
+    @drawShapesDescending pts, color, isHover
     @dimmensions.y = pts[0].y
     @dimmensions.h = pts[8].y - pts[0].y
 
     # White
     pts.reverse()
-    @drawShapesDescending pts, 0xFFFFFF
-    @drawShapesDescending pts, 0xFFFFFF, true
+    @drawShapesDescending pts, 0xFFFFFF, isHover
+    @drawShapesDescending pts, 0xFFFFFF, isHover
 
   createRandomPointGrid : (rows, cols, size=10) ->
     @points = []
@@ -56,7 +56,7 @@ class Crystal
         x = i*size + @randomNum(4 * @seed + 10 + j + i) * (size * jitter) * dir
 
         dir = if @randomNum(3*@seed + j + i + 2) > 0.1 then 1 else -1
-        y = j*size + @randomNum(5 * @seed + j + i)      * (size * jitter) * dir
+        y = j*size + @randomNum(5 * @seed + j + i) * (size * jitter) * dir
 
         pt = new createjs.Point x, y
         @points.push pt
@@ -72,9 +72,9 @@ class Crystal
     else
       @points[randomIndex][randomAxis] += 10 + 1 * @randomNum(@seed*200)
 
-  drawShapesDescending : (pts, color=0xFFFFFF, addStroke=true) ->
+  drawShapesDescending : (pts, color=0xFFFFFF, isHover) ->
     fadeColor=true
-    if color != 0xFFFFFF
+    if color != 0xFFFFFF && isHover
       if @alreadyDrawn
         color = 0x00AF8C
       else
@@ -89,8 +89,6 @@ class Crystal
         opacity = 1
 
       @g.beginFill( createjs.Graphics.getRGB(color, opacity) )
-      # if addStroke
-        # @g.setStrokeStyle(0.3,'round', 'round').beginStroke( createjs.Graphics.getRGB(0xFFFFFF,0.9) )
       @g.moveTo( pts[i].x, pts[i].y )
       @g.lineTo( pts[i+1].x, pts[i+1].y )
       @g.lineTo( pts[i+2].x, pts[i+2].y )
@@ -103,10 +101,9 @@ class Crystal
     return min + rnd * (max - min)
 
   getBitmapDataUrl : () ->
-    height = 40
     scaleFactor = 1
 
-    scaleFactor = height / @dimmensions.h
+    scaleFactor = @height / @dimmensions.h
 
     sw = @dimmensions.w * scaleFactor
     sh = @dimmensions.h * scaleFactor

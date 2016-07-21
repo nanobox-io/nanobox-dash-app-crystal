@@ -25,7 +25,7 @@ class Crystal
     @s.y  = 2
     @g    = @s.graphics
 
-    color = if isHover then 0xFF0000 else 0x96A1A7
+    color = if isHover then 0xFF0000 else 0x697C87
 
     # Draw the points
     @createRandomPointGrid(3,3,15)
@@ -76,9 +76,9 @@ class Crystal
     fadeColor=true
     if color != 0xFFFFFF && isHover
       if @alreadyDrawn
-        color = 0x00AF8C
+        color = 0x1EB8FF
       else
-        color = 0xFF7991
+        color = 0x1EB8FF
 
     @alreadyDrawn = true
 

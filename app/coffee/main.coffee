@@ -28,7 +28,7 @@ class Crystal
     color = if isHover then 0xFF0000 else 0x697C87
 
     # Draw the points
-    @createRandomPointGrid(3,3,15)
+    @createRandomPointGrid(3,3,5)
 
     # Color
     pts = _.sortBy( @points, 'x');
@@ -68,9 +68,9 @@ class Crystal
 
     # Create a jaggy point
     if randomIndex < midPoint
-      @points[randomIndex][randomAxis] -= 10 + 1 * @randomNum(@seed*200)
+      @points[randomIndex][randomAxis] -= 2 + 1 * @randomNum(@seed*200)
     else
-      @points[randomIndex][randomAxis] += 10 + 1 * @randomNum(@seed*200)
+      @points[randomIndex][randomAxis] += 2 + 1 * @randomNum(@seed*200)
 
   drawShapesDescending : (pts, color=0xFFFFFF, isHover) ->
     fadeColor=true
@@ -104,7 +104,6 @@ class Crystal
     scaleFactor = 1
 
     scaleFactor = @height / @dimmensions.h
-
     sw = @dimmensions.w * scaleFactor
     sh = @dimmensions.h * scaleFactor
 
